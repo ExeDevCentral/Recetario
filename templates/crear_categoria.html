@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Nueva Categoría - Mi Recetario{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('index') }}">
+                        <i class="fas fa-home me-1"></i>Inicio
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-folder-plus me-1"></i>Nueva Categoría
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-folder-plus me-2"></i>Crear Nueva Categoría
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="nombre_categoria" class="form-label">
+                            <i class="fas fa-folder me-1"></i>Nombre de la Categoría
+                        </label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="nombre_categoria" 
+                               name="nombre_categoria" 
+                               placeholder="Ej: Postres, Platos Principales, Bebidas..."
+                               required>
+                        <div class="form-text">
+                            El nombre debe ser único y descriptivo para organizar mejor tus recetas.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary me-md-2">
+                            <i class="fas fa-times me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Crear Categoría
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-lightbulb me-2"></i>Sugerencias de Categorías
+                </h5>
+                <p class="card-text">Algunas ideas para organizar tus recetas:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Desayunos</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Almuerzos</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Cenas</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Postres</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Bebidas</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Ensaladas</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Sopas</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Snacks</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

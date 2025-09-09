@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Editar {{ receta }} - Mi Recetario{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('index') }}">
+                        <i class="fas fa-home me-1"></i>Inicio
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('ver_categoria', categoria=categoria) }}">
+                        <i class="fas fa-folder me-1"></i>{{ categoria }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('ver_receta', categoria=categoria, receta=receta) }}">
+                        <i class="fas fa-book me-1"></i>{{ receta }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-edit me-1"></i>Editar
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-edit me-2"></i>Editar Receta: {{ receta }}
+                </h4>
+                <small class="text-muted">
+                    <i class="fas fa-folder me-1"></i>Categoría: {{ categoria }}
+                </small>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="contenido" class="form-label">
+                            <i class="fas fa-list me-1"></i>Ingredientes e Instrucciones
+                        </label>
+                        <textarea class="form-control" 
+                                  id="contenido" 
+                                  name="contenido" 
+                                  rows="15" 
+                                  required>{{ contenido }}</textarea>
+                        <div class="form-text">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Modifica los ingredientes y las instrucciones según necesites.
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('ver_receta', categoria=categoria, receta=receta) }}" 
+                           class="btn btn-outline-secondary me-md-2">
+                            <i class="fas fa-times me-1"></i>Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fas fa-save me-1"></i>Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="fas fa-lightbulb me-2"></i>Consejos para editar recetas
+                </h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-edit me-1"></i>Mejoras comunes:</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Corregir cantidades</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Actualizar tiempos de cocción</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Mejorar instrucciones</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-plus me-1"></i>Agregar información:</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Notas adicionales</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Variaciones de la receta</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Consejos de presentación</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

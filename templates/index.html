@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Mi Recetario{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="jumbotron bg-gradient p-5 rounded-3 mb-4">
+            <h1 class="display-4 text-center">
+                <i class="fas fa-utensils text-primary me-3"></i>
+                Bienvenido a Mi Recetario
+            </h1>
+            <p class="lead text-center">Organiza y gestiona todas tus recetas favoritas de manera fácil y moderna</p>
+            <div class="text-center">
+                <span class="badge bg-primary fs-6 me-2">
+                    <i class="fas fa-folder me-1"></i>{{ categorias|length }} Categorías
+                </span>
+                <span class="badge bg-success fs-6">
+                    <i class="fas fa-book me-1"></i>{{ total_recetas }} Recetas
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="fas fa-th-large me-2"></i>Categorías
+        </h2>
+    </div>
+</div>
+
+{% if categorias %}
+    <div class="row">
+        {% for categoria in categorias %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <h5 class="card-title">
+                            <i class="fas fa-folder text-primary me-2"></i>
+                            {{ categoria.nombre }}
+                        </h5>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary btn-sm" type="button" data-bs-toggle="dropdown">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('ver_categoria', categoria=categoria.nombre) }}">
+                                        <i class="fas fa-eye me-2"></i>Ver recetas
+                                    </a>
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ url_for('eliminar_categoria', categoria=categoria.nombre) }}" 
+                                          onsubmit="return confirm('¿Estás seguro de eliminar esta categoría?')" class="d-inline">
+                                        <button type="submit" class="dropdown-item text-danger">
+                                            <i class="fas fa-trash me-2"></i>Eliminar
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="card-text text-muted">
+                        <i class="fas fa-book me-1"></i>
+                        {{ categoria.recetas_count }} receta{{ 's' if categoria.recetas_count != 1 else '' }}
+                    </p>
+                    <div class="mt-auto">
+                        <a href="{{ url_for('ver_categoria', categoria=categoria.nombre) }}" 
+                           class="btn btn-primary w-100">
+                            <i class="fas fa-arrow-right me-1"></i>Ver Recetas
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center py-5">
+                <i class="fas fa-folder-open text-muted" style="font-size: 4rem;"></i>
+                <h3 class="text-muted mt-3">No hay categorías aún</h3>
+                <p class="text-muted">Comienza creando tu primera categoría de recetas</p>
+                <a href="{{ url_for('crear_categoria') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus me-2"></i>Crear Primera Categoría
+                </a>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<!-- Quick Actions -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h3 class="mb-4">
+            <i class="fas fa-bolt me-2"></i>Acciones Rápidas
+        </h3>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-folder-plus text-primary mb-3" style="font-size: 2rem;"></i>
+                <h5 class="card-title">Nueva Categoría</h5>
+                <p class="card-text">Organiza tus recetas por tipo de comida</p>
+                <a href="{{ url_for('crear_categoria') }}" class="btn btn-outline-primary">
+                    Crear Categoría
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-plus text-success mb-3" style="font-size: 2rem;"></i>
+                <h5 class="card-title">Nueva Receta</h5>
+                <p class="card-text">Añade una nueva receta a tu colección</p>
+                <a href="{{ url_for('crear_receta') }}" class="btn btn-outline-success">
+                    Crear Receta
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card text-center h-100">
+            <div class="card-body">
+                <i class="fas fa-search text-info mb-3" style="font-size: 2rem;"></i>
+                <h5 class="card-title">Buscar Recetas</h5>
+                <p class="card-text">Encuentra recetas específicas rápidamente</p>
+                <button class="btn btn-outline-info" onclick="mostrarBusqueda()">
+                    Buscar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-search me-2"></i>Buscar Recetas
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Escribe el nombre de la receta...">
+                    <button class="btn btn-primary" onclick="buscarRecetas()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div id="searchResults"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}{{ receta }} - {{ categoria }} - Mi Recetario{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('index') }}">
+                        <i class="fas fa-home me-1"></i>Inicio
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('ver_categoria', categoria=categoria) }}">
+                        <i class="fas fa-folder me-1"></i>{{ categoria }}
+                    </a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <i class="fas fa-book me-1"></i>{{ receta }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+                <h1>
+                    <i class="fas fa-book text-success me-2"></i>{{ receta }}
+                </h1>
+                <p class="text-muted">
+                    <i class="fas fa-folder me-1"></i>Categoría: {{ categoria }}
+                </p>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="{{ url_for('editar_receta', categoria=categoria, receta=receta) }}">
+                            <i class="fas fa-edit me-2"></i>Editar Receta
+                        </a>
+                    </li>
+                    <li>
+                        <form method="POST" action="{{ url_for('eliminar_receta', categoria=categoria, receta=receta) }}" 
+                              onsubmit="return confirm('¿Estás seguro de eliminar esta receta?')" class="d-inline">
+                            <button type="submit" class="dropdown-item text-danger">
+                                <i class="fas fa-trash me-2"></i>Eliminar Receta
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">
+                    <i class="fas fa-list me-2"></i>Ingredientes e Instrucciones
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="recipe-content">
+                    {{ contenido|replace('\n', '<br>')|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="d-flex gap-2">
+            <a href="{{ url_for('ver_categoria', categoria=categoria) }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Volver a {{ categoria }}
+            </a>
+            <a href="{{ url_for('editar_receta', categoria=categoria, receta=receta) }}" class="btn btn-primary">
+                <i class="fas fa-edit me-1"></i>Editar Receta
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
