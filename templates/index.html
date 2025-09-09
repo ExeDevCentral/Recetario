@@ -31,6 +31,99 @@
     </div>
 </div>
 
+<!-- Guía paso a paso -->
+<div class="row">
+    <div class="col-12">
+        <div class="guia-pasos">
+            <div class="guia-header">
+                <h3>
+                    <i class="fas fa-graduation-cap me-2"></i>
+                    Guía Paso a Paso
+                </h3>
+                <span class="badge">Sigue estos pasos para usar tu recetario</span>
+            </div>
+            
+            <div class="paso-item">
+                <div class="paso-numero">1</div>
+                <div class="paso-contenido">
+                    <h5>Crear tu Primera Categoría</h5>
+                    <p>Organiza tus recetas por tipo de comida (ej: Desayunos, Postres, Bebidas)</p>
+                    <p class="text-muted">Las categorías te ayudan a mantener todo organizado</p>
+                    <a href="{{ url_for('crear_categoria') }}" class="paso-accion">
+                        <i class="fas fa-folder-plus"></i>Crear Categoría
+                    </a>
+                </div>
+            </div>
+            
+            <div class="paso-item">
+                <div class="paso-numero">2</div>
+                <div class="paso-contenido">
+                    <h5>Añadir tu Primera Receta</h5>
+                    <p>Escribe los ingredientes e instrucciones paso a paso</p>
+                    <p class="text-muted">Incluye cantidades exactas y tiempos de cocción</p>
+                    <a href="{{ url_for('crear_receta') }}" class="paso-accion">
+                        <i class="fas fa-plus"></i>Crear Receta
+                    </a>
+                </div>
+            </div>
+            
+            <div class="paso-item">
+                <div class="paso-numero">3</div>
+                <div class="paso-contenido">
+                    <h5>Explorar tus Recetas</h5>
+                    <p>Navega entre categorías y ve el contenido completo de cada receta</p>
+                    <p class="text-muted">Puedes editar o eliminar recetas cuando quieras</p>
+                    {% if categorias %}
+                    <a href="{{ url_for('ver_categoria', categoria=categorias[0].nombre) }}" class="paso-accion">
+                        <i class="fas fa-eye"></i>Ver Categoría
+                    </a>
+                    {% else %}
+                    <span class="text-muted">Primero crea una categoría</span>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="paso-item">
+                <div class="paso-numero">4</div>
+                <div class="paso-contenido">
+                    <h5>Buscar Recetas</h5>
+                    <p>Usa la función de búsqueda para encontrar recetas específicas</p>
+                    <p class="text-muted">Busca por nombre de receta o ingredientes</p>
+                    <button class="paso-accion" onclick="mostrarBusqueda()">
+                        <i class="fas fa-search"></i>Buscar Recetas
+                    </button>
+                </div>
+            </div>
+            
+            <div class="paso-item">
+                <div class="paso-numero">5</div>
+                <div class="paso-contenido">
+                    <h5>Gestionar tu Colección</h5>
+                    <p>Edita recetas existentes, elimina las que no uses, o crea nuevas categorías</p>
+                    <p class="text-muted">Mantén tu recetario siempre actualizado</p>
+                    <div class="d-flex gap-2">
+                        <a href="{{ url_for('crear_categoria') }}" class="btn btn-outline-primary btn-sm">
+                            <i class="fas fa-folder-plus me-1"></i>Nueva Categoría
+                        </a>
+                        <a href="{{ url_for('crear_receta') }}" class="btn btn-outline-success btn-sm">
+                            <i class="fas fa-plus me-1"></i>Nueva Receta
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categorías existentes -->
+<div class="row">
+    <div class="col-12">
+        <h2 class="mb-4">
+            <i class="fas fa-th-large me-2"></i>Mis Categorías
+        </h2>
+    </div>
+</div>
+
 {% if categorias %}
     <div class="row">
         {% for categoria in categorias %}
@@ -156,6 +249,134 @@
                     </button>
                 </div>
                 <div id="searchResults"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botón de ayuda flotante -->
+<button class="ayuda-flotante" onclick="mostrarGuiaCompleta()" title="Ver guía completa">
+    <i class="fas fa-question"></i>
+</button>
+
+<!-- Modal de guía completa -->
+<div class="modal fade guia-modal" id="guiaCompletaModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-graduation-cap me-2"></i>Guía Completa de Uso
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="guia-pasos">
+                    <div class="guia-header">
+                        <h3>
+                            <i class="fas fa-utensils me-2"></i>
+                            Cómo usar Mi Recetario
+                        </h3>
+                        <span class="badge">Guía paso a paso para aprovechar al máximo tu aplicación</span>
+                    </div>
+                    
+                    <div class="paso-item">
+                        <div class="paso-numero">1</div>
+                        <div class="paso-contenido">
+                            <h5>Crear Categorías</h5>
+                            <p>Las categorías te ayudan a organizar tus recetas por tipo de comida. Por ejemplo:</p>
+                            <ul>
+                                <li><strong>Desayunos:</strong> Pancakes, huevos, smoothies</li>
+                                <li><strong>Almuerzos:</strong> Ensaladas, sopas, sándwiches</li>
+                                <li><strong>Cenas:</strong> Pastas, carnes, pescados</li>
+                                <li><strong>Postres:</strong> Tortas, galletas, helados</li>
+                                <li><strong>Bebidas:</strong> Jugos, batidos, infusiones</li>
+                            </ul>
+                            <div class="destacado">
+                                <h6><i class="fas fa-lightbulb me-1"></i>Tip:</h6>
+                                <p>Puedes crear tantas categorías como necesites. Es mejor tener muchas categorías específicas que pocas generales.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paso-item">
+                        <div class="paso-numero">2</div>
+                        <div class="paso-contenido">
+                            <h5>Agregar Recetas</h5>
+                            <p>Para crear una receta completa, incluye:</p>
+                            <ul>
+                                <li><strong>Nombre descriptivo:</strong> "Torta de Chocolate Casera"</li>
+                                <li><strong>Ingredientes con cantidades:</strong> "2 tazas de harina, 1 taza de azúcar..."</li>
+                                <li><strong>Instrucciones paso a paso:</strong> "1. Precalentar el horno a 180°C..."</li>
+                                <li><strong>Tiempo de preparación y cocción</strong></li>
+                                <li><strong>Porciones que rinde</strong></li>
+                            </ul>
+                            <div class="destacado">
+                                <h6><i class="fas fa-lightbulb me-1"></i>Tip:</h6>
+                                <p>Usa viñetas o números para organizar los pasos. Incluye consejos especiales o variaciones.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paso-item">
+                        <div class="paso-numero">3</div>
+                        <div class="paso-contenido">
+                            <h5>Navegar y Explorar</h5>
+                            <p>Una vez que tengas recetas, puedes:</p>
+                            <ul>
+                                <li><strong>Ver todas las categorías</strong> en la página principal</li>
+                                <li><strong>Hacer clic en una categoría</strong> para ver sus recetas</li>
+                                <li><strong>Hacer clic en una receta</strong> para ver el contenido completo</li>
+                                <li><strong>Usar los menús desplegables</strong> para editar o eliminar</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paso-item">
+                        <div class="paso-numero">4</div>
+                        <div class="paso-contenido">
+                            <h5>Buscar Recetas</h5>
+                            <p>La función de búsqueda te permite encontrar recetas rápidamente:</p>
+                            <ul>
+                                <li><strong>Por nombre:</strong> Busca "chocolate" para encontrar todas las recetas con chocolate</li>
+                                <li><strong>Por ingrediente:</strong> Busca "limón" para recetas que usen limón</li>
+                                <li><strong>Por tipo:</strong> Busca "vegano" para recetas veganas</li>
+                            </ul>
+                            <div class="destacado">
+                                <h6><i class="fas fa-lightbulb me-1"></i>Tip:</h6>
+                                <p>Usa palabras clave específicas para mejores resultados. La búsqueda funciona en nombres y contenido de recetas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="paso-item">
+                        <div class="paso-numero">5</div>
+                        <div class="paso-contenido">
+                            <h5>Gestionar tu Colección</h5>
+                            <p>Mantén tu recetario organizado y actualizado:</p>
+                            <ul>
+                                <li><strong>Editar recetas:</strong> Actualiza ingredientes, cantidades o instrucciones</li>
+                                <li><strong>Eliminar recetas:</strong> Quita las que ya no uses</li>
+                                <li><strong>Crear nuevas categorías:</strong> Añade tipos de comida según necesites</li>
+                                <li><strong>Eliminar categorías vacías:</strong> Mantén solo las categorías con recetas</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="paso-item">
+                        <div class="paso-numero">6</div>
+                        <div class="paso-contenido">
+                            <h5>Consejos Avanzados</h5>
+                            <p>Para aprovechar al máximo tu recetario:</p>
+                            <ul>
+                                <li><strong>Usa nombres descriptivos:</strong> "Pollo al Limón con Arroz" es mejor que "Pollo"</li>
+                                <li><strong>Incluye fotos en las descripciones:</strong> Describe cómo debe verse el plato</li>
+                                <li><strong>Agrega notas personales:</strong> "A papá le gusta con más ajo"</li>
+                                <li><strong>Organiza por dificultad:</strong> Crea categorías como "Fácil", "Intermedio", "Avanzado"</li>
+                                <li><strong>Usa etiquetas en las descripciones:</strong> #vegano #sin-gluten #rápido</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

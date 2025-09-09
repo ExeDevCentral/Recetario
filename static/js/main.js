@@ -80,6 +80,12 @@ function mostrarBusqueda() {
     }, 500);
 }
 
+// Función para mostrar la guía completa
+function mostrarGuiaCompleta() {
+    var guiaModal = new bootstrap.Modal(document.getElementById('guiaCompletaModal'));
+    guiaModal.show();
+}
+
 // Función para buscar recetas
 function buscarRecetas() {
     var searchTerm = document.getElementById('searchInput').value.trim();
