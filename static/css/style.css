@@ -549,3 +549,39 @@ footer {
     border-color: var(--pharma-blue);
     box-shadow: 0 0.5rem 1rem rgba(44, 90, 160, 0.2);
 }
+
+/* Mobile & Tablet Ergonomic Enhancements */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px 14px;
+    }
+    .navbar-brand {
+        font-size: 1.25rem;
+    }
+    .card {
+        margin-bottom: 16px;
+        border-radius: 14px;
+    }
+    .card-img-top {
+        height: 180px;
+        object-fit: cover;
+    }
+    .btn {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem !important;
+        padding: 0.6rem 1.2rem !important;
+    }
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+    .btn-group .btn {
+        border-radius: 8px !important;
+        width: 100%;
+    }
+}
